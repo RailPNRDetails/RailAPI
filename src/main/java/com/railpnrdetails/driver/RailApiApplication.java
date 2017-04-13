@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.railpnrdetails.api")
+@ComponentScan("com.railpnrdetails.driver")
 public class RailApiApplication {
 
 	public static void main(String[] args) {
