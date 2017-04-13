@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.railpnrdetails.railway.api.LiveTrainDetails;
 
 import org.springframework.http.HttpStatus;
 
@@ -75,16 +77,13 @@ public class RailAPIController {
 	 */
 	@RequestMapping(value = "/api/liveTrainStatus", method= RequestMethod.POST, consumes = JSON_MEDIA_TYPE, produces = JSON_MEDIA_TYPE)
 	@ResponseBody
-	public void getLiveTrainsStatusList(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, IOException {
+	public void getLiveTrainsStatusList(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, IOException {
 
 		Gson gson = new Gson();
+		LiveTrainDetails trainDetails = new LiveTrainDetails();
 		
+		JsonObject responseData = trainDetails.getLiveTrainDetails( request,  response, requestBody);
 		
-		JsonObject responseData = testService( request,  response);
-		
-		
-		
-		//gson.fromJson(responseData, JsonObject.class).getAsJsonObject().toString().getBytes();
 		response.setContentType(JSON_MEDIA_TYPE);
 		
 		try{
@@ -95,57 +94,7 @@ public class RailAPIController {
 		
 	}
 	
-	private JsonObject testService(HttpServletRequest request, HttpServletResponse response){
-		
-		JsonObject responseData = new JsonObject();
-	try {
-
-			int trainNumber = 12345;
-			String date = "20170411"; //YYYYMMDD
-			//Test service
-			URL url = new URL("http://api.railwayapi.com/live/train/"+trainNumber+"/doj/"+date+"/apikey/0vfjouj0");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
-			
-			Gson gson = new Gson();
-		
-			conn.setDoOutput(true);
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Content-Type", "application/json");
-
-
-			OutputStream os = conn.getOutputStream();
-			os.flush();
-
-			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ conn.getResponseCode());
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
-
-			String output;
-			System.out.println("Output from Server .... \n");
-			while ((output = br.readLine()) != null) {
-
-				responseData.addProperty("ResponseFromAPI", output);
-				System.out.println(responseData);
-			}
-
-			conn.disconnect();
-
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
- 
-			e.printStackTrace();
-
-		}
 	
-	return responseData;
-	}
 	
 	 
 
