@@ -1,4 +1,4 @@
-package com.railpnrdetails.api;
+package com.railpnrdetails.driver;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.railpnrdetails.api;
+package com.railpnrdetails.driver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
