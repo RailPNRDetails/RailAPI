@@ -30,7 +30,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 public class RailAPIController {
-	
+
 	public static final String JSON_MEDIA_TYPE = "application/json";
 
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
@@ -42,60 +42,63 @@ public class RailAPIController {
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
-	
 	/*
 	 * @param headers
+	 * 
 	 * @param request
+	 * 
 	 * @return String
+	 * 
 	 * @throws
 	 */
-	@RequestMapping(value = "/api/cancelledTrains/{ID}", method= RequestMethod.GET, consumes = JSON_MEDIA_TYPE, produces = JSON_MEDIA_TYPE)
+	@RequestMapping(value = "/api/cancelledTrains/{ID}", method = RequestMethod.GET, consumes = JSON_MEDIA_TYPE, produces = JSON_MEDIA_TYPE)
 	@ResponseBody
-	public void getcancelledTrainsList(@PathVariable("ID") String ID, HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, IOException {
+	public void getcancelledTrainsList(@PathVariable("ID") String ID, HttpServletRequest request,
+			HttpServletResponse response) throws JsonSyntaxException, IOException {
 
 		Gson gson = new Gson();
-		
+
 		JsonObject responseData = new JsonObject();
 		responseData.addProperty("ID", ID);
-		
+
 		gson.fromJson(responseData, JsonObject.class).getAsJsonObject().toString().getBytes();
 		response.setContentType(JSON_MEDIA_TYPE);
-		
-		try{
+
+		try {
 			response.getOutputStream().write(gson.fromJson(responseData, JsonObject.class).toString().getBytes());
-		}finally {
+		} finally {
 			response.getOutputStream().close();
 		}
-		
+
 	}
-	
+
 	/*
 	 * @param headers
+	 * 
 	 * @param request
+	 * 
 	 * @return String
+	 * 
 	 * @throws
 	 */
-	@RequestMapping(value = "/api/liveTrainStatus", method= RequestMethod.POST, consumes = JSON_MEDIA_TYPE, produces = JSON_MEDIA_TYPE)
+	@RequestMapping(value = "/api/liveTrainStatus", method = RequestMethod.POST, consumes = JSON_MEDIA_TYPE, produces = JSON_MEDIA_TYPE)
 	@ResponseBody
-	public void getLiveTrainsStatusList(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, IOException {
+	public void getLiveTrainsStatusList(@RequestBody String requestBody, HttpServletRequest request,
+			HttpServletResponse response) throws JsonSyntaxException, IOException {
 
 		Gson gson = new Gson();
 		LiveTrainDetails trainDetails = new LiveTrainDetails();
-		
-		JsonObject responseData = trainDetails.getLiveTrainDetails( request,  response, requestBody);
-		
+
+		JsonObject responseData = trainDetails.getLiveTrainDetails(request, response, requestBody);
+
 		response.setContentType(JSON_MEDIA_TYPE);
-		
-		try{
+
+		try {
 			response.getOutputStream().write(gson.fromJson(responseData, JsonObject.class).toString().getBytes());
-		}finally {
+		} finally {
 			response.getOutputStream().close();
 		}
-		
+
 	}
-	
-	
-	
-	 
 
 }
