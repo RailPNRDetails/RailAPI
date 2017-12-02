@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class LiveTrainDetails {
 
 		JsonObject responseData = new JsonObject();
 
-		try {
+				try {
 
 			JsonObject requestData = new Gson().fromJson(requestBody.toString(), JsonObject.class);
 
