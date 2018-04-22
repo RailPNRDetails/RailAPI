@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class RailApiApplication {
 
 	public static void main(String[] args) {
+		System.out.println("new change");
 		SpringApplication.run(RailApiApplication.class, args);
 	}
 }
